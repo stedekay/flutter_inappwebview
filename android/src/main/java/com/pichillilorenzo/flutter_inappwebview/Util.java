@@ -17,6 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Key;
@@ -78,9 +80,9 @@ public class Util {
   }
 
   public static InputStream getFileAsset(InAppWebViewFlutterPlugin plugin,String assetFilePath) throws IOException {
-    String key = (plugin.registrar != null) ? plugin.registrar.lookupKeyForAsset(assetFilePath) : plugin.flutterAssets.getAssetFilePathByName(assetFilePath);
-    AssetManager mg = plugin.applicationContext.getResources().getAssets();
-    return mg.open(key);
+    File file = new File(assetFilePath);
+    
+    return new FileInputStream(file);
   }
 
   public static WaitFlutterResult invokeMethodAndWait(final MethodChannel channel, final String method, final Object arguments) throws InterruptedException {
